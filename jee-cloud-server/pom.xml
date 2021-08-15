@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>xyz.framework.cloud</groupId>
+        <artifactId>jee-cloud-parent</artifactId>
+        <version>1.0.0</version>
+    </parent>
+    <groupId>xyz.framework.cloud</groupId>
+    <artifactId>jee-cloud-server</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+    <name>jee-cloud-server</name>
+    <description>Demo project for Spring Boot</description>
+
+    <modules>
+        <module>jee-cloud-server-gateway</module>
+        <module>jee-cloud-server-system</module>
+    </modules>
+</project>

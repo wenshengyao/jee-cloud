@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.jee.server.system.dao.IUserDao">
+
+    <!--user 基础字段-->
+    <resultMap id="BaseUserResultMap" type="xyz.jee.server.system.domain.po.UserPO">
+        <id column="id" property="id"/>
+        <result column="user_name" property="userName"/>
+        <result column="password" property="password"/>
+        <result column="mobile" property="mobile"/>
+        <result column="email" property="email"/>
+        <result column="sex" property="sex"/>
+        <result column="name" property="name"/>
+        <result column="status" property="status"/>
+    </resultMap>
+
+    <!--user带role 基础字段-->
+<!--    <resultMap id="UserWithRoleResultMap" type="xyz.jee.server.system.domain.bo.UserBO">-->
+<!--        <id column="id" property="id"/>-->
+<!--        <result column="user_name" property="userName"/>-->
+<!--        <result column="password" property="password"/>-->
+<!--        <result column="mobile" property="mobile"/>-->
+<!--        <result column="email" property="email"/>-->
+<!--        <result column="sex" property="sex"/>-->
+<!--        <result column="name" property="name"/>-->
+<!--        <result column="status" property="status"/>-->
+<!--        <association property="currentRole" javaType="xyz.cloud.pms.server.system.domain.po.RolePO">-->
+<!--            <id column="role_id" property="id"/>-->
+<!--            <result column="role_name" property="roleName"/>-->
+<!--            <result column="role_code" property="roleCode"/>-->
+<!--        </association>-->
+<!--    </resultMap>-->
+
+    <!--user基础字段sql-->
+    <sql id="BaseUserColumnSql">
+        user.id,user.user_name,user.password,user.mobile,user.email,user.sex,user.name,user.status
+    </sql>
+
+    <!--根据id查询单个用户-->
+    <select id="selectUserByPrimaryKey" resultMap="BaseUserResultMap">
+        select
+        <include refid="BaseUserColumnSql"/>
+        from t_sys_user user
+        where id = #{id}
+    </select>
+
+    <!--查询用户列表-->
+    <select id="selectUserListByCondition" resultMap="BaseUserResultMap">
+        select
+        <include refid="BaseUserColumnSql"/>
+        from t_sys_user user
+        <where>
+            <if test="userName != null and userName != ''">
+                user_name like concat('%',#{userName},'%')
+            </if>
+            <if test="mobile != null and mobile != ''">
+                and mobile like concat('%',#{mobile},'%')
+            </if>
+            <if test="email != null and email != ''">
+                and email like concat('%',#{email},'%')
+            </if>
+            <if test="name != null and name != ''">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
+
+    <!--根据用户名查询用户信息，同时要查询对应角色和菜单信息，以及接口权限信息-->
+<!--    <select id="loadUserByUserName" resultMap="UserWithRoleResultMap">-->
+<!--        select-->
+<!--        <include refid="BaseUserColumnSql"/>-->
+<!--        ,role.id as role_id,role.role_code,role.role_name-->
+<!--        from t_sys_user user-->
+<!--        inner join t_sys_user_role temp on temp.user_id = user.id and temp.status = 1-->
+<!--        inner join t_sys_role role on role.id = temp.role_id-->
+<!--        where user.status = 1 and user.user_name = #{userName}-->
+<!--    </select>-->
+
+</mapper>
